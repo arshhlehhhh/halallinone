@@ -1,7 +1,7 @@
 <template>
   <div class="admin">
     <b-tabs content-class="admin-table mt-3" fill v-model="step">
-      <!-- table of information from contribution -->
+      <!-- Table of information from contribution -->
       <b-tab title="Submitted Forms" active>
         <b-row>
           <b-col class="table-responsive">
@@ -22,7 +22,7 @@
           </b-col>
         </b-row>
       </b-tab>
-      <!-- admin's form -->
+      <!-- Admin's form -->
       <b-tab title="Admin Form">
         <b-row>
           <b-col>
@@ -230,7 +230,7 @@ export default {
       ],
       regions: [
         { text: 'North', value: 'north' },
-        { text: 'North-East', value: 'north-east' },
+        { text: 'North-East', value: 'north_east' },
         { text: 'South', value: 'south' },
         { text: 'East', value: 'east' },
         { text: 'West', value: 'west' }
@@ -247,7 +247,7 @@ export default {
       var location = []
       if (this.form.region === 'north') {
         location = this.north
-      } else if (this.form.region === 'north-east') {
+      } else if (this.form.region === 'north_east') {
         location = this.northeast
       } else if (this.form.region === 'south') {
         location = this.south
@@ -262,15 +262,13 @@ export default {
     }
   },
   mounted () {
-    axios
+    axios // API call to retrieve the contribution information
       .get('https://wad2-hallallinone.et.r.appspot.com/contribution')
       .then((response) => {
         this.restaurant = response.data.Contribution
         for (var i in this.restaurant) {
           var item = this.restaurant[i]
           this.editButton = 'Edit'
-          // item.contact = item.contact.replace(/'/g, '"')
-          // var s = JSON.parse(item.contact)
           if (item.verification_status === 'Pending') {
             this.count = item.cid
             var contact = item.contact.substring(1, item.contact.length - 1)
@@ -302,30 +300,6 @@ export default {
       })
   },
   methods: {
-    // onSubmit (evt) {
-    //   evt.preventDefault()
-    //   alert(JSON.stringify(this.form))
-    // },
-    // onReset (evt) {
-    //   evt.preventDefault()
-    //   // Reset our form values
-    //   this.form.name = ''
-    //   this.form.outlet = ''
-    //   this.form.operation = ''
-    //   this.form.blkStreet = ''
-    //   this.form.unitNum = ''
-    //   this.form.postalCode = ''
-    //   this.form.contact = ''
-    //   this.form.email = ''
-    //   this.form.region = null
-    //   this.form.location = null
-    //   this.form.tags = []
-    //   // Trick to reset/clear native browser form validation state
-    //   this.show = false
-    //   this.$nextTick(() => {
-    //     this.show = true
-    //   })
-    // },
     filterArray: function (temp) {
       temp = temp.substring(1, temp.length - 1)
       temp = temp.split(', ')
@@ -377,7 +351,6 @@ export default {
       this.edit = false
     },
     submitForm () {
-      // var operationSplit = this.form.operation.split(', ')
       this.edit = true
       const auth = {
         store_name: this.form.name,
@@ -396,7 +369,7 @@ export default {
       }
       const url = 'https://wad2-hallallinone.et.r.appspot.com/restaurant/add'
       const urlVerification = 'https://wad2-hallallinone.et.r.appspot.com/contribution/update/' + this.form.id + '/' + 'Approved'
-      axios.post(url, auth).then((response) => {
+      axios.post(url, auth).then((response) => { // API call to add data into restaurant table
         console.log(response.status)
         if (response.status === 201) {
           axios.get(urlVerification).then((response) => {

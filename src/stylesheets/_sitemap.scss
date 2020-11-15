@@ -1,0 +1,28 @@
+.siteMap {
+    // height: 100vh;
+    .title {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .spacing {
+      padding: 10px;
+      a {
+        color:black;
+        text-decoration: underline;
+        &:hover {
+          text-decoration: none;
+          color:green;
+        }
+      }
+    }
+  
+  }
+  .jumbotron {
+    padding: 15px;
+    ul {
+      margin: 0%;
+      li {
+        padding: 10px;
+      }
+    }
+  }

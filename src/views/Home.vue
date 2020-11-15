@@ -48,7 +48,8 @@
         <div class="content">
           <!-- Checks if there's restaurant data then show this || isEmpty(restaurant)-->
           <span v-if="restaurant != undefined && !error">
-            <span v-show="restaurant === {}"><b-icon icon="arrow-clockwise" animation="spin" font-scale="4" variant="success"></b-icon></span>
+            <span v-if="restaurant.length < 1"><b-icon icon="arrow-clockwise" animation="spin" font-scale="4" variant="success"></b-icon></span>
+            <b-spinner v-if="restaurant === {}" variant="success" label="Spinning"></b-spinner>
             <b-card-group deck class="justify-content-center">
               <span v-for="store in restaurant" :key="store.id">
                 <RestaurantCard :id="store.rid" :stall="store" />
@@ -96,7 +97,7 @@ export default {
     this.$getLocation()
       .then(coordinates => {
         // Referred to https://softauthor.com/vuejs-geolocation-get-user-location/
-        axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coordinates.lat + ',' + coordinates.lng + '&key=AIzaSyCY-JLzRXduQFdrflpjenGd_s58LilUrQU'
+        axios.get('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coordinates.lat + ',' + coordinates.lng + '&key=AIzaSyCY-JLzRXduQFdrflpjenGd_s58LilUrQU'
         ).then(response => {
           if (response.error_message) {
             console.log(response.error_message)
@@ -108,6 +109,7 @@ export default {
             } else {
               this.location = 'location/' + currentLocation
             }
+            // API call to retrieve the restaurant information
             axios.get('https://wad2-hallallinone.et.r.appspot.com/restaurant/search/' + this.location
             ).then(data => {
               this.restaurant = data.data.Restaurant

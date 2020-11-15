@@ -6,7 +6,7 @@
         <img src="../assets/logo.png">
         <h1>Sitemap</h1>
       </div>
-      <!-- Problem Section -->
+      <!-- Links & Information -->
       <div class="spacing">
           <b-jumbotron>
             <ul>
@@ -33,37 +33,6 @@
     <b-col md="2" class="green"></b-col>
   </b-row>
 </template>
-
-<style lang="scss">
-.siteMap {
-  // height: 100vh;
-  .title {
-    text-align: center;
-    margin-top: 30px;
-  }
-  .spacing {
-    padding: 10px;
-    a {
-      color:black;
-      text-decoration: underline;
-      &:hover {
-        text-decoration: none;
-        color:green;
-      }
-    }
-  }
-
-}
-.jumbotron {
-  padding: 15px;
-  ul {
-    margin: 0%;
-    li {
-      padding: 10px;
-    }
-  }
-}
-</style>
 
 <script>
 export default {

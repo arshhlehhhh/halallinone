@@ -10,6 +10,7 @@
     </b-jumbotron>
   </div>
 </template>
+
 <script>
 import Vue from 'vue'
 import VueSession from 'vue-session'
@@ -23,18 +24,6 @@ export default {
       logged: false
     }
   },
-  mounted () {
-    // this.$session.start()
-    // if (this.$session.exists()) {
-    //   this.logged = true
-    // } else {
-    //   this.logged = false
-    // }
-    // console.log(this.logged)
-    // console.log(this.login.username)
-    // this.logged = this.success
-    console.log(this.test)
-  },
   methods: {
     something () {
       this.logged = this.$session.exists()
@@ -42,25 +31,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.contributeSection {
-  .vertical-center {
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    background:
-      linear-gradient(
-        rgba(0, 0, 0, 0.7),
-        rgba(0, 0, 0, 0.7)
-      ),
-      url('../assets/Contribute_Img.jpg');
-    background-size: cover;
-    height: 100%;
-  }
-  a {
-    text-decoration: none;
-    color: black;
-  }
-}
-</style>

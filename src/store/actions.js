@@ -4,7 +4,6 @@ export default {
   // Search by Region Functions
   loadEast ({ commit }) {
     Vue.axios.get('https://wad2-hallallinone.et.r.appspot.com/restaurant/search/region/east').then(response => {
-      // console.log(response.data)
       commit('GET_RESTAURANTS', response.data)
     }).catch(error => {
       throw new Error(`API ${error}`)
@@ -12,7 +11,6 @@ export default {
   },
   loadWest ({ commit }) {
     Vue.axios.get('https://wad2-hallallinone.et.r.appspot.com/restaurant/search/region/west').then(response => {
-      console.log(response.data)
       commit('GET_RESTAURANTS', response.data)
     }).catch(error => {
       throw new Error(`API ${error}`)
@@ -41,7 +39,6 @@ export default {
   },
   loadCentral ({ commit }) {
     Vue.axios.get('https://wad2-hallallinone.et.r.appspot.com/restaurant/search/region/central').then(response => {
-      console.log(response.data)
       commit('GET_RESTAURANTS', response.data)
     }).catch(error => {
       throw new Error(`API ${error}`)
@@ -50,7 +47,6 @@ export default {
   // Search by Location Functions
   loadLocation ({ commit }) {
     Vue.axios.get('https://wad2-hallallinone.et.r.appspot.com/restaurant/search/location/').then(response => {
-      console.log(response.data)
       commit('GET_RESTAURANTS', response.data)
     }).catch(error => {
       throw new Error(`API ${error}`)

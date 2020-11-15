@@ -1,5 +1,5 @@
 <template>
-    <b-card :img-src="storeImage()" img-alt="Image" img-top class="mb-2 restaurantCard">
+    <b-card :img-src="require('@/assets/' + storeImage)" img-alt="Image" img-top class="mb-2 restaurantCard">
       <b-card-text class="text-center">
         <router-link :to="`/restaurant/${id}`" class="stretched-link">
           <p id="description">{{ description() }}</p>
@@ -11,9 +11,6 @@
           </p>
         </router-link>
         <br>
-        <!-- <a id="icon" href="#">
-          <b-icon-bookmark class="float-right" style="z-index:3; position:relative" color="red"></b-icon-bookmark>
-        </a> -->
       </b-card-text>
     </b-card>
 </template>
@@ -31,6 +28,40 @@ export default {
       restaurant: this.stall
     }
   },
+  computed: {
+    storeImage () {
+      // Local image files
+      var img = ''
+      if (this.restaurant.store_name === '4Fingers') {
+        img = '4fingers.jpg'
+      } else if (this.restaurant.store_name === 'Encik Tan') {
+        img = 'enciktan.png'
+      } else if (this.restaurant.store_name === '18 Chefs') {
+        img = '18chef.jpg'
+      } else if (this.restaurant.store_name === 'Seoul Garden') {
+        img = 'seoul_garden.jpg'
+      } else if (this.restaurant.store_name === 'The Ramen Stall') {
+        img = 'TRS.jpg'
+      } else if (this.restaurant.store_name === 'Ichikokudo Hokkaido Ramen') {
+        img = 'ichikokudo.jpg'
+      } else if (this.restaurant.store_name === 'Habibie Seafood') {
+        img = 'habibie.png'
+      } else if (this.restaurant.store_name === 'Prata Wala') {
+        img = 'PrataWala.jpg'
+      } else if (this.restaurant.store_name === 'Sakura') {
+        img = 'sakura.jpg'
+      } else if (this.restaurant.store_name === 'Prima Deli') {
+        img = 'PrimaDeli.jpg'
+      } else if (this.restaurant.store_name === 'Maki-San') {
+        img = 'Maki-San.jpg'
+      } else if (this.restaurant.store_name === 'CRAVE') {
+        img = 'crave.jpg'
+      } else {
+        img = 'questionmark.png'
+      }
+      return img
+    }
+  },
   methods: {
     description () {
       // Solution taken from StackOverflow
@@ -39,18 +70,6 @@ export default {
       } else {
         return this.restaurant.description.substr(0, this.restaurant.description.lastIndexOf(' ', 230)) + '...'
       }
-    },
-    storeImage () {
-      // Placeholder links taken from google for restaurant image
-      var img = ''
-      if (this.restaurant.store_name === '4Fingers') {
-        img = 'https://s3-ap-southeast-1.amazonaws.com/191-dev/wp-content/uploads/2020/07/16162146/4fingers.jpg'
-      } else if (this.restaurant.store_name === '18 Chefs') {
-        img = 'https://moderne.com.sg/wp-content/uploads/2016/12/18-chefs.jpg'
-      } else {
-        img = 'https://picsum.photos/600/300/?image=25'
-      }
-      return img
     }
   }
 }

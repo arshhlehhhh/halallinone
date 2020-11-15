@@ -2,9 +2,9 @@
   <b-row class="restaurant">
     <b-col md="2" class="green"></b-col>
     <b-col>
-      <!-- Image with title and brief info -->
+      <!-- Store image and info -->
       <b-overlay show opacity="0.75" variant="light">
-        <img :src="storeImage()" width="100%" height="380px">
+        <img :src="require('@/assets/' + storeImage)" width="100%" height="380px">
         <template v-slot:overlay>
           <div class="w-100 text-center">
             <h1 style="font-size: 60px; margin-bottom: 20px">{{ restaurant.store_name }}</h1>
@@ -100,8 +100,42 @@ export default {
       place_id: ''
     }
   },
+  computed: {
+    storeImage () {
+      // Local image files
+      var img = ''
+      if (this.restaurant.store_name === '4Fingers') {
+        img = '4fingers.jpg'
+      } else if (this.restaurant.store_name === 'Encik Tan') {
+        img = 'enciktan.png'
+      } else if (this.restaurant.store_name === '18 Chefs') {
+        img = '18chef.jpg'
+      } else if (this.restaurant.store_name === 'Seoul Garden') {
+        img = 'seoul_garden.jpg'
+      } else if (this.restaurant.store_name === 'The Ramen Stall') {
+        img = 'TRS.jpg'
+      } else if (this.restaurant.store_name === 'Ichikokudo Hokkaido Ramen') {
+        img = 'ichikokudo.jpg'
+      } else if (this.restaurant.store_name === 'Habibie Seafood') {
+        img = 'habibie.png'
+      } else if (this.restaurant.store_name === 'Prata Wala') {
+        img = 'PrataWala.jpg'
+      } else if (this.restaurant.store_name === 'Sakura') {
+        img = 'sakura.jpg'
+      } else if (this.restaurant.store_name === 'Prima Deli') {
+        img = 'PrimaDeli.jpg'
+      } else if (this.restaurant.store_name === 'Maki-San') {
+        img = 'Maki-San.jpg'
+      } else if (this.restaurant.store_name === 'CRAVE') {
+        img = 'crave.jpg'
+      } else {
+        img = 'questionmark.png'
+      }
+      return img
+    }
+  },
   mounted () {
-    axios
+    axios // API call to retrieve the restaurant information
       .get('https://wad2-hallallinone.et.r.appspot.com/restaurant/search/rid/' + this.$route.params.id)
       .then(response => {
         this.restaurant = response.data.Restaurant
@@ -120,12 +154,12 @@ export default {
         this.socials = JSON.parse(social)
         this.gMap = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyCY-JLzRXduQFdrflpjenGd_s58LilUrQU&q=' + this.restaurant.postal_code + '&zoom=18'
         this.place_id = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=' + this.restaurant.store_name + ' ' + this.restaurant.outlet + '&inputtype=textquery&key=AIzaSyDgKD27MEAeN4JgY7R_Kd4DnJbNUjZ_q2M&fields=place_id,formatted_address'
-        axios
+        axios // API call to Google to retrieve the restaurant map
           .get('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=' + this.restaurant.store_name + ' ' + this.restaurant.outlet + '&inputtype=textquery&key=AIzaSyDgKD27MEAeN4JgY7R_Kd4DnJbNUjZ_q2M&fields=place_id,formatted_address')
           .then(response => {
             var result = response.data.candidates[0]
             this.place_id = result.place_id
-            axios
+            axios // API call to Google to retrieve the restaurant ratings and reviews
               .get('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=' + this.place_id + '&fields=name,rating,reviews&key=AIzaSyDgKD27MEAeN4JgY7R_Kd4DnJbNUjZ_q2M')
               .then(response => {
                 this.ratings = response.data.result.rating
@@ -144,17 +178,6 @@ export default {
       temp = temp.substring(1, temp.length - 1)
       temp = temp.split(', ')
       return temp
-    },
-    storeImage () {
-      var img = ''
-      if (this.restaurant.store_name === '4Fingers') {
-        img = 'https://s3-ap-southeast-1.amazonaws.com/191-dev/wp-content/uploads/2020/07/16162146/4fingers.jpg'
-      } else if (this.restaurant.store_name === '18 Chefs') {
-        img = 'https://moderne.com.sg/wp-content/uploads/2016/12/18-chefs.jpg'
-      } else {
-        img = ''
-      }
-      return img
     }
   }
 }

@@ -15,7 +15,7 @@
         <b-button class="mt-3" variant="outline-success" block @click="okay()">Okay!</b-button>
       </div>
     </b-modal>
-    <b-modal id="my-modal" hide-footer>
+    <b-modal id="my-modal" hide-footer  @close="restart()" @hide="restart()">
       <b-tabs content-class="mt-3" fill>
         <!-- Login part -->
         <b-tab title="Login" active>
@@ -34,6 +34,9 @@
                 <div class="input-group">
                   <input type="password" class="form-control" name="password" v-model="login.password" placeholder="Password" required="required">
                 </div>
+              </div>
+              <div>
+                <b-alert show variant="danger" v-if="error" class="text-center">{{ error }}</b-alert>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-success login-btn btn-block">Sign in</button>
@@ -102,12 +105,12 @@ export default {
       logName: null,
       success: false,
       role: null,
-      checkUser: false
+      checkUser: false,
+      error: ''
     }
   },
   beforeCreate: function () {
     if (!this.$session.exists()) {
-      // this.$router.push('/')
     }
   },
   methods: {
@@ -117,7 +120,6 @@ export default {
     LogIn () {
       var cryptoObject = Vue.CryptoJS.SHA256(this.login.password).toString()
       const auth = { username: this.login.username, password: cryptoObject }
-      // const authJson = JSON.stringify(auth)
       const url = 'https://wad2-hallallinone.et.r.appspot.com/user/authenticate'
       axios.post(url, auth).then((response) => {
         if (response.status === 201) {
@@ -132,17 +134,18 @@ export default {
           this.hideModal('my-modal')
           this.success = true
         }
-      }, function (err) {
-        console.log('err', err)
-      }
-      )
+      }).catch(err => {
+        if (err.response.status === 405) {
+          this.error = 'You might have entered the wrong password or username. Please try again!'
+        }
+      })
     },
     okay () {
       this.hideModal('logoutSuccess-modal')
       this.$router.go('/')
     },
     LogOut () {
-    // sesssion
+    // Destroy current sesssion
       this.$session.destroy()
       this.success = false
       this.hideModal('my-modal')
@@ -179,12 +182,20 @@ export default {
             axios.defaults.headers.common.Authorization = 'Bearer ' + response.data.token
             this.hideModal('my-modal')
             this.success = true
-            // this.role = ''
           }
         }, function (err) {
           console.log('err', err)
         })
       }
+    },
+    restart () {
+      this.login.username = ''
+      this.login.password = ''
+      this.register.username = ''
+      this.register.email = ''
+      this.register.password = ''
+      this.error = ''
+      this.hideModal('my-modal')
     }
   }
 }

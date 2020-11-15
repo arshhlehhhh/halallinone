@@ -185,7 +185,7 @@ export default {
           var temp = []
           temp.push(obj[count])
           temp.push(obj[count + 1])
-          count++
+          count = count + 2
           slideArr.push(temp)
         }
       }

@@ -14,6 +14,9 @@
             </div>
         </b-jumbotron>
       </div>
+      <b-alert :show="success" @dismissed="dismissCountDown=0" @dismiss-count-down="countDownChanged" variant="success" class="text-center">
+        You have successfully contributed a restaurant!
+      </b-alert>
       <!-- Input Form -->
       <b-form @submit="onSubmit" @reset="onReset" style="">
         <b-form-group id="name-group" label="Restaurant's Name" label-for="name">
@@ -100,25 +103,9 @@
     <b-col md="2" class="green"></b-col>
   </b-row>
 </template>
+
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style lang="scss">
-.contribution {
-  .vertical-center {
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    background:
-      linear-gradient(
-        rgba(255, 255, 255, 0.7),
-        rgba(255, 255, 255, 0.7)
-      ),
-      url('../assets/Contribute_Img.jpg');
-    background-size: cover;
-    height: 100%;
-    color: black;
-  }
-}
-</style>
+
 <script>
 import Multiselect from 'vue-multiselect'
 import axios from 'axios'
@@ -130,6 +117,9 @@ export default {
   },
   data () {
     return {
+      success: false,
+      dismissSecs: 10,
+      dismissCountDown: 0,
       form: {
         name: '',
         outlet: '',
@@ -204,7 +194,7 @@ export default {
       ],
       regions: [
         { text: 'North', value: 'north' },
-        { text: 'North-East', value: 'north-east' },
+        { text: 'North-East', value: 'north_east' },
         { text: 'South', value: 'south' },
         { text: 'East', value: 'east' },
         { text: 'West', value: 'west' },
@@ -217,7 +207,7 @@ export default {
       var location = []
       if (this.form.region === 'north') {
         location = this.north
-      } else if (this.form.region === 'north-east') {
+      } else if (this.form.region === 'north_east') {
         location = this.northeast
       } else if (this.form.region === 'south') {
         location = this.south
@@ -232,10 +222,19 @@ export default {
     }
   },
   methods: {
+    countDownChanged (dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
     onSubmit (evt) {
       evt.preventDefault()
       var operationSplit = this.form.operation.split(', ')
       var tagsArray = this.turnTagsToArray(this.form.tags)
+      var photo = ''
+      if (this.form.photoFile === null) {
+        photo = 'no photo'
+      } else {
+        photo = this.form.photoFile[0].name
+      }
       const url = 'https://wad2-hallallinone.et.r.appspot.com/contribution/add'
       const item = {
         username: 'user3',
@@ -250,17 +249,19 @@ export default {
         unit_number: this.form.unitNum,
         postal_code: this.form.postalCode,
         contact: '["' + this.form.contact + '", "' + this.form.email + '"]',
-        image_links: '{ store: "' + this.form.photoFile[0].name + '", menu: "" }',
+        image_links: '{ store: "' + photo + '", menu: "" }',
         social_media_links: '',
         operation: '{ days: ["' + [operationSplit[0]] + '"], hours: ["' + [operationSplit[1]] + '"] }',
         verification_status: 'Pending'
       }
-      console.log(item)
       axios
         .post(url, item).then((response) => {
-          console.log(response.data)
+          this.success = true
+          this.onReset(evt)
+        }).catch(error => {
+          this.error = true
+          throw new Error(`API ${error}`)
         })
-      this.success = true
     },
     onReset (evt) {
       evt.preventDefault()
@@ -276,6 +277,8 @@ export default {
       this.form.region = null
       this.form.location = null
       this.form.tags = []
+      this.form.photoFile = null
+      this.form.remarks = ''
       // Trick to reset/clear native browser form validation state
       this.show = false
       this.$nextTick(() => {
