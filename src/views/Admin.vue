@@ -368,12 +368,13 @@ export default {
         operation: this.form.operation
       }
       const url = 'https://wad2-hallallinone.et.r.appspot.com/restaurant/add'
-      const urlVerification = 'https://wad2-hallallinone.et.r.appspot.com/contribution/update/' + this.form.id + '/' + 'Approved'
+      const urlVerification = 'https://wad2-hallallinone.et.r.appspot.com/contribution/update/' + this.form.cid + '/' + 'Approved'
+      // console.log(this.form.cid)
       axios.post(url, auth).then((response) => { // API call to add data into restaurant table
         console.log(response.status)
         if (response.status === 201) {
           axios.get(urlVerification).then((response) => {
-            this.$router.push('/admin')
+            // this.$router.push('/admin')
             this.step = 0
           })
         }
