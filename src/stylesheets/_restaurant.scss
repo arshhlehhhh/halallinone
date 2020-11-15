@@ -1,0 +1,38 @@
+.restaurant {
+    .badge {
+      margin-right: 10px;
+    }
+    h4 {
+      font-weight: bold;
+    }
+    .details, .reviews {
+      margin: 20px;
+      .btn-light.disabled, .btn-light:disabled {
+        opacity: 1;
+      }
+      .dropdown-item.active, .dropdown-item:active {
+        background-color: #239B4D;
+      }
+    }
+    // iFrame responsive taken from https://www.benmarshall.me/responsive-iframes/
+    .iframe-container {
+        overflow: hidden;
+        /* 16:9 aspect ratio */
+        padding-top: 56.25%;
+        position: relative;
+    }
+    
+    .iframe-container iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    .table {
+      td {
+        min-width: 150px;
+      }
+    }
+  }

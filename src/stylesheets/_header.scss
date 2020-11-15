@@ -1,0 +1,21 @@
+.header {
+    background-color: #124F27;
+    margin: 0%;
+    a, .navbar-dark .navbar-nav .nav-link {
+        color: white
+    }
+    a {
+        &:hover, &.router-link-exact-active {
+            color: #42b983;
+        }
+    }
+    a:link {
+        text-decoration: none;
+    }
+    .dropdown-menu a{
+        color: black !important;
+        &:hover{
+            background-color: #239B4D;
+        }
+    }
+}

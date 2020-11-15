@@ -1,0 +1,21 @@
+.home {
+  height: inherit;
+  .title {
+    margin-top: 20px;
+  }
+  
+  .carousel-section {
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+    height: 50px;
+    width: 50px;
+    filter: invert(80%);
+    }
+    .info {
+    background-color: rgba(0, 0, 0, 0.541);
+    }
+    .img-fluid {
+    height: 480px;
+    }
+  }
+}

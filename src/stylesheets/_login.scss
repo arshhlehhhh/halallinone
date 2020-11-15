@@ -1,0 +1,28 @@
+.login-form, .signup-form {
+    width: 400px;
+    margin: 0 auto;
+    form {
+        margin-bottom: 15px;
+        padding: 30px;
+        h2 {
+            margin: 0 0 15px;
+        }
+    }
+    .form-control {
+        border-radius: 2px;
+        .login-btn {
+            font-size: 15px;
+            font-weight: bold;
+            min-height: 40px;
+        }
+    }
+}
+.modal-header {
+    border:none;
+}
+.modal-body {
+    padding:0;
+}
+.modal-content {
+    border-radius:15px;
+}

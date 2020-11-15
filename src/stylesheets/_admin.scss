@@ -1,0 +1,41 @@
+.admin {
+    padding-top: 20px;
+    .nav-link {
+      color: #42b983;
+    }
+    .nav-link.active {
+      color: #124F27;
+      font-weight: bold;
+    }
+    .admin-table {
+      col {
+        padding: 0%;
+      }
+  
+      .table-responsive {
+        height: inherit;
+      }
+  
+      .b-table-sticky-header {
+        max-height: calc(100vh - 146px);
+        margin-bottom: 0%;
+      }
+  
+      table {
+        tr:nth-child(even) {
+          background-color: #0C351A;
+          color: white;
+          // color: #343a40;
+          // background-color: white;
+        }
+  
+        td {
+          max-width: 200px;
+          word-wrap: break-word;
+          .badge {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
