@@ -233,7 +233,8 @@ export default {
         { text: 'North-East', value: 'north_east' },
         { text: 'South', value: 'south' },
         { text: 'East', value: 'east' },
-        { text: 'West', value: 'west' }
+        { text: 'West', value: 'west' },
+        { text: 'Central', value: 'central' }
       ],
       edit: true,
       editButton: null,
